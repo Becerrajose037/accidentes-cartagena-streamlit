@@ -4,7 +4,7 @@ Quise saber si, con los datos de accidentes de Cartagena, se puede predecir si u
 
 Autor: Jose Becerra
 
-URL de la aplicación: [pendiente]
+URL de la aplicación: https://becerrajose037-accidentes-cartagena-streamlit-app-lj2hel.streamlit.app
 
 Repositorio en GitHub: https://github.com/Becerrajose037/accidentes-cartagena-streamlit
 
