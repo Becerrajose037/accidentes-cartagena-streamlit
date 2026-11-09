@@ -1,0 +1,554 @@
+{
+  "semilla": 42,
+  "fecha_ejecucion": "2026-11-08T20:49:10",
+  "nulos_pct_antes_de_imputar": {
+    "choque_con": 19.76,
+    "objeto_fijo": 21.55
+  },
+  "limpieza": {
+    "duplicados_exactos_eliminados": 2,
+    "latitud_fuera_de_rango_a_nan": 7,
+    "longitud_fuera_de_rango_a_nan": 4,
+    "gravedad_con_heridos_pero_muertos_mayor_0": 786,
+    "gravedad_valores": {
+      "Con Heridos": 7446,
+      "Con Muertos": 618,
+      "Con muertos": 1,
+      "CON HERIDOS": 1
+    },
+    "ipat_con_dos_filas_crudas": 573
+  },
+  "datos": {
+    "filas_csv": 8066,
+    "accidentes_consolidados": 7493,
+    "fatal_1": 1337,
+    "fatal_0": 6156,
+    "porcentaje_fatal": 17.84
+  },
+  "split": {
+    "train": 5245,
+    "test": 2248,
+    "train_pct": 70,
+    "test_pct": 30,
+    "train_fatal_1": 936,
+    "test_fatal_1": 401
+  },
+  "variables": {
+    "numericas": [
+      "hora",
+      "mes",
+      "anio",
+      "dia_semana",
+      "es_fin_de_semana",
+      "latitud",
+      "longitud"
+    ],
+    "categoricas": [
+      "clase_accidente",
+      "choque_con",
+      "objeto_fijo",
+      "hipotesis_1",
+      "hipotesis_2",
+      "barrio",
+      "localidad",
+      "via6",
+      "franja_horaria"
+    ],
+    "excluidas_fuga": [
+      "ipat",
+      "muertos",
+      "heridos",
+      "gravedad",
+      "coordenadas"
+    ],
+    "excluidas_redundantes_o_poco_informativas": [
+      "lugar",
+      "via1",
+      "via2",
+      "via3",
+      "via4",
+      "via5",
+      "hipotesis_3",
+      "hipotesis_4"
+    ]
+  },
+  "cv_inicial": {
+    "Regresión logística": {
+      "cv_f1_mean": 0.6031716432098616,
+      "cv_f1_std": 0.02575398587898177
+    },
+    "Árbol de decisión": {
+      "cv_f1_mean": 0.6838810011547227,
+      "cv_f1_std": 0.017447837852851714
+    },
+    "KNN": {
+      "cv_f1_mean": 0.5295985169023381,
+      "cv_f1_std": 0.01901962634147034
+    },
+    "Naive Bayes": {
+      "cv_f1_mean": 0.4659062017842556,
+      "cv_f1_std": 0.050393966095963715
+    },
+    "SVM": {
+      "cv_f1_mean": 0.6762273111181514,
+      "cv_f1_std": 0.025866377442096307
+    }
+  },
+  "correlacion_con_fatal": {
+    "pearson": {
+      "hora": -0.02220753351079389,
+      "mes": 0.19491462934993928,
+      "anio": 0.40799913711258784,
+      "dia_semana": 0.01126552460737335,
+      "es_fin_de_semana": 0.0027417663034899373,
+      "latitud": -0.06271810970239447,
+      "longitud": 0.04706429100603125
+    },
+    "spearman": {
+      "hora": -0.015504402121974181,
+      "mes": 0.19336794048213143,
+      "anio": 0.4116322563722955,
+      "dia_semana": 0.011523166732470948,
+      "es_fin_de_semana": 0.0027417663034900175,
+      "latitud": -0.0273245313687586,
+      "longitud": 0.020060276295661147
+    }
+  },
+  "informacion_mutua": {
+    "nota": "Calculada sobre el 70%. Categóricas codificadas con OrdinalEncoder y numéricas imputadas con la mediana. Las variables de alta cardinalidad (barrio, localidad) tienden a tener información mutua sobreestimada.",
+    "ranking": {
+      "via6": 0.14815929825489427,
+      "anio": 0.13266481061628446,
+      "choque_con": 0.046914927387404506,
+      "barrio": 0.044079475564172146,
+      "mes": 0.028196071347544042,
+      "hipotesis_1": 0.027156909616665226,
+      "objeto_fijo": 0.018866433369893746,
+      "hipotesis_2": 0.01343071976013514,
+      "hora": 0.005874419134747542,
+      "clase_accidente": 0.003448169053906632,
+      "franja_horaria": 0.003180322256677859,
+      "longitud": 0.0018556358814896257,
+      "localidad": 0.0004399301540691236,
+      "dia_semana": 0.00030619394094136276,
+      "es_fin_de_semana": 3.7539090355642735e-06,
+      "latitud": 0.0
+    }
+  },
+  "interpretacion_relaciones": "Sin ajustar, el árbol de decisión obtiene F1 CV 0.684 y la regresión logística 0.603; el árbol supera a la logística, así que hay relaciones no lineales (o interacciones entre variables).",
+  "tuning": {
+    "Regresión logística": {
+      "metodo": "GridSearchCV",
+      "mejores_hiperparametros": {
+        "C": 0.1
+      },
+      "cv_f1_mean": 0.6066815990722633,
+      "cv_f1_std": 0.020127350992516533,
+      "combinaciones_evaluadas": 5
+    },
+    "Árbol de decisión": {
+      "metodo": "GridSearchCV",
+      "mejores_hiperparametros": {
+        "max_depth": 12,
+        "min_samples_leaf": 1
+      },
+      "cv_f1_mean": 0.7359989345853483,
+      "cv_f1_std": 0.021246778740145963,
+      "combinaciones_evaluadas": 25
+    },
+    "KNN": {
+      "metodo": "GridSearchCV",
+      "mejores_hiperparametros": {
+        "n_neighbors": 31,
+        "weights": "uniform"
+      },
+      "cv_f1_mean": 0.5431446288243811,
+      "cv_f1_std": 0.020888153776182153,
+      "combinaciones_evaluadas": 10
+    },
+    "Boosting (Gradient Boosting)": {
+      "metodo": "RandomizedSearchCV",
+      "mejores_hiperparametros": {
+        "subsample": 1.0,
+        "n_estimators": 100,
+        "max_depth": 2,
+        "learning_rate": 0.2
+      },
+      "cv_f1_mean": 0.7615169389482153,
+      "cv_f1_std": 0.0245849170065369,
+      "combinaciones_evaluadas": 12
+    }
+  },
+  "nota_cv_anidada": "Outer StratifiedKFold(5, random_state=43) y inner StratifiedKFold(5, random_state=42) sobre el 70%, misma rejilla/RandomizedSearchCV que en el ajuste. Los folds externos son distintos de los de ajuste (con la misma semilla coinciden y el resultado sería trivialmente igual). f1_externo_* es el F1 de la clase fatal en cada pliegue externo; f1_cv_no_anidado es el F1 CV del ajuste normal. La diferencia indica el sesgo optimista de no anidar.",
+  "cv_anidada": {
+    "Regresión logística": {
+      "f1_externo_mean": 0.6175869097069909,
+      "f1_externo_std": 0.021884866969387122,
+      "f1_externo_por_pliegue": [
+        0.6160714285714286,
+        0.6477541371158393,
+        0.6295399515738499,
+        0.6133333333333333,
+        0.5812356979405034
+      ],
+      "f1_cv_no_anidado": 0.6066815990722633,
+      "sesgo_no_anidado_menos_externo": -0.01090531063472766
+    },
+    "Árbol de decisión": {
+      "f1_externo_mean": 0.7260820107361675,
+      "f1_externo_std": 0.024958951171852463,
+      "f1_externo_por_pliegue": [
+        0.7123287671232876,
+        0.7407407407407407,
+        0.764179104477612,
+        0.7223719676549866,
+        0.6907894736842105
+      ],
+      "f1_cv_no_anidado": 0.7359989345853483,
+      "sesgo_no_anidado_menos_externo": 0.009916923849180748
+    },
+    "KNN": {
+      "f1_externo_mean": 0.5310136964624851,
+      "f1_externo_std": 0.0083930152735689,
+      "f1_externo_por_pliegue": [
+        0.5173745173745173,
+        0.536779324055666,
+        0.5419103313840156,
+        0.527306967984934,
+        0.5316973415132924
+      ],
+      "f1_cv_no_anidado": 0.5431446288243811,
+      "sesgo_no_anidado_menos_externo": 0.012130932361895996
+    },
+    "Boosting (Gradient Boosting)": {
+      "f1_externo_mean": 0.7538661058446446,
+      "f1_externo_std": 0.027061899672169987,
+      "f1_externo_por_pliegue": [
+        0.7507692307692307,
+        0.7725856697819314,
+        0.7619047619047619,
+        0.7804878048780488,
+        0.7035830618892508
+      ],
+      "f1_cv_no_anidado": 0.7615169389482153,
+      "sesgo_no_anidado_menos_externo": 0.00765083310357062
+    }
+  },
+  "nota_ensambles": "Votación y Bagging reutilizan los hiperparámetros ajustados con los mismos folds (StratifiedKFold 5 sobre el 70%) y no tienen validación anidada completa; su F1 CV puede estar algo sobreestimado.",
+  "modelos_finales": {
+    "Regresión logística": {
+      "tipo": "clasico",
+      "cv_f1_mean": 0.6066815990722633,
+      "cv_f1_std": 0.020127350992516533,
+      "test": {
+        "accuracy": 0.8269572953736655,
+        "precision": 0.5106007067137809,
+        "recall": 0.7206982543640897,
+        "f1": 0.5977249224405378,
+        "roc_auc": 0.8684717551006079,
+        "pr_auc": 0.7077971787570259
+      }
+    },
+    "Árbol de decisión": {
+      "tipo": "clasico",
+      "cv_f1_mean": 0.7359989345853483,
+      "cv_f1_std": 0.021246778740145963,
+      "test": {
+        "accuracy": 0.9137010676156584,
+        "precision": 0.8264984227129337,
+        "recall": 0.6533665835411472,
+        "f1": 0.7298050139275766,
+        "roc_auc": 0.7933961792864888,
+        "pr_auc": 0.6596854575598362
+      }
+    },
+    "KNN": {
+      "tipo": "clasico",
+      "cv_f1_mean": 0.5431446288243811,
+      "cv_f1_std": 0.020888153776182153,
+      "test": {
+        "accuracy": 0.722864768683274,
+        "precision": 0.3735763097949886,
+        "recall": 0.8179551122194514,
+        "f1": 0.5129007036747459,
+        "roc_auc": 0.8689935961395915,
+        "pr_auc": 0.7343878289764609
+      }
+    },
+    "Naive Bayes": {
+      "tipo": "clasico",
+      "cv_f1_mean": 0.4659062017842556,
+      "cv_f1_std": 0.050393966095963715,
+      "test": {
+        "accuracy": 0.6325622775800712,
+        "precision": 0.29308666017526774,
+        "recall": 0.7506234413965087,
+        "f1": 0.4215686274509804,
+        "roc_auc": 0.7783890301317632,
+        "pr_auc": 0.540146876391142
+      }
+    },
+    "SVM": {
+      "tipo": "clasico",
+      "cv_f1_mean": 0.6762273111181514,
+      "cv_f1_std": 0.025866377442096307,
+      "test": {
+        "accuracy": 0.8843416370106761,
+        "precision": 0.6784810126582278,
+        "recall": 0.6683291770573566,
+        "f1": 0.6733668341708543,
+        "roc_auc": 0.8718485324317792,
+        "pr_auc": 0.7382005078002974
+      }
+    },
+    "Votación (LR+Árbol+KNN)": {
+      "tipo": "ensamble",
+      "cv_f1_mean": 0.7219831678138984,
+      "cv_f1_std": 0.021335317239531304,
+      "test": {
+        "accuracy": 0.9030249110320284,
+        "precision": 0.7340153452685422,
+        "recall": 0.71571072319202,
+        "f1": 0.7247474747474747,
+        "roc_auc": 0.8885379944832019,
+        "pr_auc": 0.790578536134977
+      }
+    },
+    "Bagging (árboles)": {
+      "tipo": "ensamble",
+      "cv_f1_mean": 0.7496838592067059,
+      "cv_f1_std": 0.022892225048909285,
+      "test": {
+        "accuracy": 0.9141459074733096,
+        "precision": 0.8661971830985915,
+        "recall": 0.6134663341645885,
+        "f1": 0.7182481751824817,
+        "roc_auc": 0.8915927560632799,
+        "pr_auc": 0.8119498589051889
+      }
+    },
+    "Boosting (Gradient Boosting)": {
+      "tipo": "ensamble",
+      "cv_f1_mean": 0.7615169389482153,
+      "cv_f1_std": 0.0245849170065369,
+      "test": {
+        "accuracy": 0.922153024911032,
+        "precision": 0.897887323943662,
+        "recall": 0.6359102244389028,
+        "f1": 0.7445255474452555,
+        "roc_auc": 0.8954636959307201,
+        "pr_auc": 0.7992857749569662
+      }
+    }
+  },
+  "mejor_clasico": {
+    "nombre": "Árbol de decisión",
+    "cv_f1_mean": 0.7359989345853483,
+    "test_f1": 0.7298050139275766
+  },
+  "ensambles_vs_mejor_clasico": {
+    "Votación (LR+Árbol+KNN)": {
+      "mejora_cv_f1": -0.014015766771449889,
+      "mejora_test_f1": -0.005057539180101878
+    },
+    "Bagging (árboles)": {
+      "mejora_cv_f1": 0.01368492462135762,
+      "mejora_test_f1": -0.011556838745094833
+    },
+    "Boosting (Gradient Boosting)": {
+      "mejora_cv_f1": 0.025518004362866997,
+      "mejora_test_f1": 0.01472053351767888
+    }
+  },
+  "seleccion": {
+    "criterio": "Mayor F1 medio en CV 5-fold sobre el 70% de entrenamiento",
+    "ranking_cv": [
+      "Boosting (Gradient Boosting)",
+      "Bagging (árboles)",
+      "Árbol de decisión",
+      "Votación (LR+Árbol+KNN)",
+      "SVM",
+      "Regresión logística",
+      "KNN",
+      "Naive Bayes"
+    ],
+    "mejor": "Boosting (Gradient Boosting)",
+    "segundo": "Bagging (árboles)",
+    "mejor_en_test_por_f1": "Boosting (Gradient Boosting)",
+    "mcnemar_mejor_vs_segundo": {
+      "tabla": [
+        [
+          2031,
+          42
+        ],
+        [
+          24,
+          151
+        ]
+      ],
+      "estadistico": 4.378787878787879,
+      "p_valor": 0.03638886620070851,
+      "exacta": false,
+      "correccion_continuidad": true
+    }
+  },
+  "ejemplos_prediccion": [
+    {
+      "registro_prueba": 1340781,
+      "real": 1,
+      "prediccion": 1,
+      "puntaje": 0.9612,
+      "interpretacion": "Accidente a las 6:00 h, Choque, choque con Vehiculo, localidad 3, barrio EL RECREO. El modelo predice fatal (probabilidad 0.96); real: fatal. Acierto."
+    },
+    {
+      "registro_prueba": 1340245,
+      "real": 1,
+      "prediccion": 1,
+      "puntaje": 0.9684,
+      "interpretacion": "Accidente a las 16:00 h, Choque, choque con Vehiculo, localidad 1, barrio MANGA. El modelo predice fatal (probabilidad 0.97); real: fatal. Acierto."
+    },
+    {
+      "registro_prueba": 1340131,
+      "real": 1,
+      "prediccion": 1,
+      "puntaje": 0.8519,
+      "interpretacion": "Accidente a las 5:00 h, Choque, choque con Vehiculo, localidad 1, barrio MANGA. El modelo predice fatal (probabilidad 0.85); real: fatal. Acierto."
+    },
+    {
+      "registro_prueba": 1334008,
+      "real": 0,
+      "prediccion": 0,
+      "puntaje": 0.0544,
+      "interpretacion": "Accidente a las 6:00 h, Choque, choque con Vehiculo, localidad 3, barrio VILLA ROSITA. El modelo predice no fatal (probabilidad 0.05); real: no fatal. Acierto."
+    },
+    {
+      "registro_prueba": 75811,
+      "real": 0,
+      "prediccion": 0,
+      "puntaje": 0.0903,
+      "interpretacion": "Accidente a las 15:00 h, Caida ocupante, choque con Desconocido, localidad 2, barrio LOS ALPES. El modelo predice no fatal (probabilidad 0.09); real: no fatal. Acierto."
+    }
+  ],
+  "tasa_fatal_por_anio": {
+    "2020": {
+      "accidentes": 978,
+      "fatales": 58,
+      "tasa_pct": 5.93
+    },
+    "2021": {
+      "accidentes": 1317,
+      "fatales": 77,
+      "tasa_pct": 5.85
+    },
+    "2022": {
+      "accidentes": 1301,
+      "fatales": 103,
+      "tasa_pct": 7.92
+    },
+    "2023": {
+      "accidentes": 1254,
+      "fatales": 103,
+      "tasa_pct": 8.21
+    },
+    "2024": {
+      "accidentes": 1253,
+      "fatales": 113,
+      "tasa_pct": 9.02
+    },
+    "2025": {
+      "accidentes": 1390,
+      "fatales": 883,
+      "tasa_pct": 63.53
+    }
+  },
+  "validacion_temporal": {
+    "corte": "entrenamiento: anio <= 2024; prueba: anio == 2025",
+    "n_train": 6103,
+    "n_test": 1390,
+    "fatal_train": 454,
+    "fatal_test": 883,
+    "tasa_fatal_train_pct": 7.44,
+    "tasa_fatal_test_pct": 63.53,
+    "modelos": {
+      "Regresión logística": {
+        "accuracy": 0.5136690647482014,
+        "precision": 0.680628272251309,
+        "recall": 0.4416761041902605,
+        "f1": 0.5357142857142857,
+        "roc_auc": 0.5627489216652036,
+        "pr_auc": 0.6929933537694475
+      },
+      "Árbol de decisión": {
+        "accuracy": 0.39784172661870504,
+        "precision": 0.6982758620689655,
+        "recall": 0.09173272933182333,
+        "f1": 0.16216216216216217,
+        "roc_auc": 0.4950679166638745,
+        "pr_auc": 0.6428276324379744
+      },
+      "Boosting (Gradient Boosting)": {
+        "accuracy": 0.37985611510791367,
+        "precision": 0.723404255319149,
+        "recall": 0.03850509626274066,
+        "f1": 0.07311827956989247,
+        "roc_auc": 0.5715196758406097,
+        "pr_auc": 0.6868194036280226
+      }
+    }
+  },
+  "ablacion_sin_anio": {
+    "modelo": "Boosting (Gradient Boosting)",
+    "nota": "Diagnóstico: mismo Gradient Boosting final, quitando solo `anio` de las numéricas. No se guarda ni reemplaza el modelo final.",
+    "aleatorio_70_30": {
+      "con_anio": {
+        "accuracy": 0.922153024911032,
+        "precision": 0.897887323943662,
+        "recall": 0.6359102244389028,
+        "f1": 0.7445255474452555,
+        "roc_auc": 0.8954636959307201,
+        "pr_auc": 0.7992857749569662
+      },
+      "sin_anio": {
+        "accuracy": 0.8945729537366548,
+        "precision": 0.8445378151260504,
+        "recall": 0.5012468827930174,
+        "f1": 0.6291079812206573,
+        "roc_auc": 0.8614549171197615,
+        "pr_auc": 0.7268484960437619
+      }
+    },
+    "temporal_2025": {
+      "con_anio": {
+        "accuracy": 0.37985611510791367,
+        "precision": 0.723404255319149,
+        "recall": 0.03850509626274066,
+        "f1": 0.07311827956989247,
+        "roc_auc": 0.5715196758406097,
+        "pr_auc": 0.6868194036280226
+      },
+      "sin_anio": {
+        "accuracy": 0.3841726618705036,
+        "precision": 0.8648648648648649,
+        "recall": 0.0362400906002265,
+        "f1": 0.06956521739130435,
+        "roc_auc": 0.6039869907367077,
+        "pr_auc": 0.714529823007957
+      }
+    }
+  },
+  "interpretacion_temporal": "Con el modelo final, el F1 baja de 0.745 (test aleatorio 30%) a 0.073 en 2025 y el recall de 0.636 a 0.039, mientras la tasa de fatales sube de 7.4% (train, ≤2024) a 63.5% (2025); sin `anio` el ROC AUC en 2025 es 0.604 frente a 0.572 con `anio`, y el PR AUC de referencia (prevalencia) es 0.635, así que ninguna de las dos versiones discrimina bien en 2025 (ROC AUC < 0,70).",
+  "archivos": {
+    "modelo": "modelo_accidentes.joblib",
+    "reporte_ydata": "reporte_ydata_profiling.html",
+    "figuras": [
+      "comparacion_modelos.png",
+      "correlacion_lineal_vs_no_lineal.png",
+      "curva_roc.png",
+      "distribucion_objetivo.png",
+      "informacion_mutua.png",
+      "matriz_confusion_final.png",
+      "tasa_fatal_por_anio.png"
+    ]
+  },
+  "umbral": 0.5
+}

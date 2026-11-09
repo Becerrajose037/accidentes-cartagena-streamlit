@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Jupyter / Colab
+.ipynb_checkpoints/
+modelo_colab.joblib
+
+# Residuo de Windows (nombre reservado, no se puede borrar ni subir)
+nul
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
