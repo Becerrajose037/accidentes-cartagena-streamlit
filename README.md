@@ -58,7 +58,7 @@ El script consolida el CSV a una fila por accidente y crea la variable `fatal`. 
 
 Ojo: al correrlo se sobrescriben `modelo_accidentes.joblib` y `resultados.json`.
 
-El cuaderno de Colab hace lo mismo, por si prefiero correrlo ahí. Instala las librerías con versiones fijadas, descarga el CSV desde datos.gov.co si no está en el directorio y guarda `resultados.json`, las figuras de `figuras/` y el modelo como `modelo_colab.joblib`. Ese modelo no es el que usa la app: al contener `preparar` definida en el cuaderno (`__main__`), `app.py` no puede cargarlo. El archivo `modelo_accidentes.joblib` que carga la app se genera con `python entrenar_modelo.py`. Notebook de Colab: [pendiente]
+El cuaderno de Colab hace lo mismo, por si prefiero correrlo ahí. Instala las librerías con versiones fijadas, descarga el CSV desde datos.gov.co si no está en el directorio y guarda `resultados.json`, las figuras de `figuras/` y el modelo como `modelo_colab.joblib`. Ese modelo no es el que usa la app: al contener `preparar` definida en el cuaderno (`__main__`), `app.py` no puede cargarlo. El archivo `modelo_accidentes.joblib` que carga la app se genera con `python entrenar_modelo.py`. Notebook de Colab: https://colab.research.google.com/drive/1JmgXZwuV-7RLj6VWX-Mf7qYSo8zdValp?usp=sharing
 
 Si cambio `entrenar_modelo.py` o `prepro.py`, regenero el cuaderno con `python generar_notebook.py` para que sigan siendo coherentes.
 
@@ -70,7 +70,6 @@ Las métricas del mejor modelo están en `resultados.json`, y también en la pes
 2. Entro a [share.streamlit.io](https://share.streamlit.io) con mi cuenta de GitHub y elijo "Create app".
 3. En "Main file path" escribo `app.py`.
 4. Si Cloud me pide la versión de Python en "Advanced settings", elijo 3.12.
-5. Hago clic en "Deploy". Cuando termina, copio la URL y la pego arriba, donde dice `[pendiente]`.
 
 ## Limitaciones
 
