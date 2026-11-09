@@ -117,36 +117,71 @@ def pestana_predecir(modelo, opciones):
     st.warning(AVISO)
     st.write('Elige las características del accidente y calcula la probabilidad de que tenga al menos un muerto.')
 
+    with st.expander('¿Qué significa cada campo?'):
+        st.markdown(
+            '- **Fecha del accidente:** el modelo mira el año, el mes, el día de la semana y si cae en fin de semana. '
+            'El año pesa mucho (ver la sección "Acerca del modelo").\n'
+            '- **Hora del accidente:** la hora en que ocurrió. Se usa también como franja: madrugada (0 a 5), '
+            'mañana (6 a 11), tarde (12 a 17) y noche (18 a 23).\n'
+            '- **Clase de accidente:** cómo ocurrió. *Choque* (dos cosas chocan), *Atropello* (un vehículo golpea a una persona), '
+            '*Caída ocupante* (alguien cae de un vehículo), *Volcamiento* (el vehículo se voltea) u *Otro*.\n'
+            '- **Choque con:** contra qué chocó el vehículo. *Vehículo*, *Objeto fijo*, *Semoviente* (un animal) o *No*. '
+            '"Sin dato" significa que el informe no lo registró.\n'
+            '- **Objeto fijo:** si el vehículo chocó contra algo fijo, como un poste, un muro o un árbol. '
+            '"Ninguno" quiere decir que no hubo objeto fijo.\n'
+            '- **Tipo de vía (vía 6):** categoría de una de las vías registradas en el accidente. '
+            '"No aplica (0)" significa que el informe no tiene una sexta vía.\n'
+            '- **Hipótesis 1 y 2:** códigos numéricos de las posibles causas del accidente, según la primera '
+            'apreciación del agente de tránsito. El código de la hipótesis 2 puede ser 0, que significa "ninguna". '
+            'La lista de códigos no está traducida en el dataset, así que aquí los muestro tal cual.\n'
+            '- **Barrio:** el barrio donde ocurrió el accidente, tal como aparece en el registro.\n'
+            '- **Localidad:** la localidad de Cartagena donde ocurrió (1, 2 o 3).\n'
+            '- **Latitud y longitud:** la ubicación. Solo se aceptan valores dentro de Cartagena (latitud entre 10,1 y 10,6, '
+            'longitud entre -75,8 y -75,2). Si no sabes la coordenada exacta, deja el centro.\n\n'
+            'Después de calcular, el modelo muestra una probabilidad entre 0 % y 100 %. Si es 50 % o más, '
+            'la predicción es "Fatal".'
+        )
+
     with st.form('formulario_accidente'):
         col1, col2 = st.columns(2)
         with col1:
             fecha = st.date_input('Fecha del accidente', value=date(2024, 6, 15),
                                   min_value=opciones['fecha_min'], max_value=opciones['fecha_max'],
-                                  help='Solo se aceptan fechas dentro del rango de los datos (2020 a 2025).')
-            hora = st.slider('Hora del accidente', 0, 23, 17)
+                                  help='Año, mes y día del accidente. Solo se aceptan fechas entre 2020 y 2025.')
+            hora = st.slider('Hora del accidente', 0, 23, 17,
+                             help='Hora en que ocurrió, de 0 (medianoche) a 23.')
             clase = st.selectbox('Clase de accidente', opciones['clases'],
-                                 index=indice(opciones['clases'], 'Choque'))
+                                 index=indice(opciones['clases'], 'Choque'),
+                                 help='Cómo ocurrió el accidente: choque, atropello, caída de un ocupante, volcamiento u otro.')
             choque = st.selectbox('Choque con', opciones['choque'],
-                                  index=indice(opciones['choque'], 'Vehiculo'))
+                                  index=indice(opciones['choque'], 'Vehiculo'),
+                                  help='Con qué chocó el vehículo: otro vehículo, un objeto fijo o un animal. "Sin dato" si no fue registrado.')
             objeto = st.selectbox('Objeto fijo', opciones['objeto'],
-                                  index=indice(opciones['objeto'], 'Ninguno'))
+                                  index=indice(opciones['objeto'], 'Ninguno'),
+                                  help='Si el vehículo chocó contra algo fijo, como un poste, muro o árbol. "Ninguno" si no hubo.')
             via6 = st.selectbox('Tipo de vía (vía 6)', opciones['vias6'],
-                                format_func=etiqueta_via6, index=indice(opciones['vias6'], 'Otro'))
+                                format_func=etiqueta_via6, index=indice(opciones['vias6'], 'Otro'),
+                                help='Categoría de una de las vías del accidente.')
         with col2:
             hip1 = st.selectbox('Hipótesis 1 (código del informe)', opciones['hipotesis'],
-                                format_func=etiqueta_hipotesis, index=indice(opciones['hipotesis'], 139))
+                                format_func=etiqueta_hipotesis, index=indice(opciones['hipotesis'], 139),
+                                help='Código de la primera posible causa, según el agente de tránsito que atendió el caso.')
             hip2 = st.selectbox('Hipótesis 2 (código del informe)', opciones['hipotesis'],
-                                format_func=etiqueta_hipotesis, index=indice(opciones['hipotesis'], 0))
+                                format_func=etiqueta_hipotesis, index=indice(opciones['hipotesis'], 0),
+                                help='Código de una segunda posible causa. "Ninguna (0)" si el informe no tiene una segunda.')
             barrio = st.selectbox('Barrio', opciones['barrios'],
-                                  index=indice(opciones['barrios'], 'CENTRO'))
+                                  index=indice(opciones['barrios'], 'CENTRO'),
+                                  help='Barrio donde ocurrió el accidente.')
             localidad = st.selectbox('Localidad', opciones['localidades'],
                                      format_func=lambda v: f'Localidad {v}',
-                                     index=indice(opciones['localidades'], 1))
+                                     index=indice(opciones['localidades'], 1),
+                                     help='Localidad de Cartagena (1, 2 o 3) donde ocurrió el accidente.')
             lat = st.number_input('Latitud', min_value=LAT_RANGO[0], max_value=LAT_RANGO[1],
-                                  value=CENTRO_CARTAGENA[0], step=0.001, format='%.5f')
+                                  value=CENTRO_CARTAGENA[0], step=0.001, format='%.5f',
+                                  help='Coordenada norte-sur del punto del accidente. Entre 10,1 y 10,6 para Cartagena.')
             lon = st.number_input('Longitud', min_value=LON_RANGO[0], max_value=LON_RANGO[1],
                                   value=CENTRO_CARTAGENA[1], step=0.001, format='%.5f',
-                                  help='Por defecto es el centro de Cartagena. Puedes dejarlo así si no conoces el punto exacto.')
+                                  help='Coordenada este-oeste del punto del accidente. Entre -75,8 y -75,2 para Cartagena. Por defecto es el centro de la ciudad.')
         enviado = st.form_submit_button('Calcular probabilidad', type='primary')
 
     if enviado:
@@ -230,6 +265,18 @@ def pestana_lote(modelo):
     st.write('Sube un CSV con el mismo formato del archivo original (los nombres de columnas deben coincidir). '
              'Recibirás el mismo archivo con dos columnas nuevas: la probabilidad y la predicción.')
     st.caption('Columnas que el modelo necesita: ' + ', '.join(COLUMNAS_NECESARIAS))
+
+    with st.expander('¿Qué debe traer el archivo y qué devuelve la app?'):
+        st.markdown(
+            '- **Formato:** el mismo CSV de accidentes de Cartagena, con los nombres de columna originales. '
+            'Puedes usar el archivo completo o un extracto.\n'
+            '- **Columnas obligatorias:** fecha, hora, clase de accidente, choque con, objeto fijo, hipótesis 1 y 2, '
+            'barrio, localidad, vía 6, latitud y longitud.\n'
+            '- **Columnas que la app agrega:** *probabilidad_fatal* es la probabilidad (entre 0 y 1) de que el accidente '
+            'tenga al menos un muerto. *prediccion* dice "Fatal" si esa probabilidad es 0,5 o más, "No fatal" si es menor, '
+            'y "Sin predicción" si la fila no tiene fecha, hora o clase válidas.\n'
+            '- **Descarga:** al final puedes bajar el mismo archivo con esas dos columnas nuevas.'
+        )
 
     archivo = st.file_uploader('Archivo CSV', type='csv')
     if archivo is None:
