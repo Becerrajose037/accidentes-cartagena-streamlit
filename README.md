@@ -6,7 +6,7 @@ Autor: Jose Becerra
 
 URL de la aplicación: [pendiente]
 
-Repositorio en GitHub: [pendiente]
+Repositorio en GitHub: https://github.com/Becerrajose037/accidentes-cartagena-streamlit
 
 Este repositorio tiene el trabajo para la materia Aprendizaje de Máquinas: el código de limpieza y entrenamiento, el modelo guardado, la aplicación de Streamlit y el cuaderno con el proceso.
 
