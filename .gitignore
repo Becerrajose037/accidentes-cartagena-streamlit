@@ -16,6 +16,13 @@ modelo_colab.joblib
 # Residuo de Windows (nombre reservado, no se puede borrar ni subir)
 nul
 
+# Entregables de la materia (se entregan aparte, no van al repositorio)
+Entregables_Proyecto_Integrador/
+Trabajo_Integrador_CRISP-DM_Accidentes_Cartagena.docx
+U4_A1_*.docx
+TareaFinalAprendizaje.pdf
+reporte_ydata_profiling.html
+
 # Sistema
 .DS_Store
 Thumbs.db
